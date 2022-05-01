@@ -20,6 +20,9 @@ public class source_revenue {
     String regularity;
     String nature_receipt;
     String real_form;
+    @OneToMany
+    @JoinColumn(name="source_revenue_fk")
+    private List<revenue> revenues;
 
     public source_revenue(String name_source, String type_source, String regularity, String nature_receipt, String real_form){
         this.name_source = name_source;
@@ -62,4 +65,14 @@ public class source_revenue {
                 ", real_form = '" + real_form + '\'' +
                 '}';
     }
+
+    public void setRevenues (revenue revenue)
+    {
+        revenues.add(revenue);
+        if(revenue.getSource_revenue()!=this){
+            revenue.setSource_revenue(this);
+        }
+    }
+    public List<revenue> getRevenues(){return this.revenues;}
+
 }

@@ -1,6 +1,7 @@
 package com.ulstu.HomeBudget.Model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import javax.persistence.Column;
@@ -20,6 +21,16 @@ public class family_member {
     String name;
     int age;
     String email;
+    @ManyToMany
+    @JoinTable(name="familyMember_Revenue",
+            joinColumns = @JoinColumn(name ="family_member_fk"),
+            inverseJoinColumns = @JoinColumn(name = "revenue_fk"))
+    private List<revenue> revenues = new ArrayList<>();
+    @ManyToMany
+    @JoinTable(name="familyMember_Expense",
+            joinColumns = @JoinColumn(name ="family_member_fk"),
+            inverseJoinColumns = @JoinColumn(name = "expense_fk"))
+    private List<expense> expenses = new ArrayList<>();
 
     public family_member(String surname, String middle_name, String name,
                          int age, String email) {
@@ -63,4 +74,28 @@ public class family_member {
                 ", email = '" + email + '\'' +
                 '}';
     }
+
+    public void setRevenues (List<revenue> revenues)
+    {
+        this.revenues = revenues;
+    }
+    public void addRevenues(revenue revenue) {
+        revenues.add(revenue);
+        if (!revenue.getFamily_members().contains(this)) {
+            revenue.addFamily_member(this);
+        }
+    }
+    public List<revenue> getRevenues(){return this.revenues;}
+
+    public void setExpenses (List<expense> expenses)
+    {
+        this.expenses = expenses;
+    }
+    public void addExpenses(expense expense) {
+        expenses.add(expense);
+        if (!expense.getFamily_members().contains(this)) {
+            expense.addFamily_member(this);
+        }
+    }
+    public List<expense> getExpenses(){return this.expenses;}
 }

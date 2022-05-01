@@ -19,6 +19,9 @@ public class category_expense {
     int limits;
     int passibility_planning;
     int category_necessity;
+    @OneToMany
+    @JoinColumn(name="category_expense_fk")
+    private List<expense> expenses;
 
     public category_expense(String category, int limits, int passibility_planning, int category_necessity){
         this.category=category;
@@ -56,4 +59,13 @@ public class category_expense {
                 ", category_necessity = '" + category_necessity + '\'' +
                 '}';
     }
+
+    public void setExpenses (expense expense)
+    {
+        expenses.add(expense);
+        if(expense.getCategory_expense()!=this){
+            expense.setCategory_expense(this);
+        }
+    }
+    public List<expense> getExpenses(){return this.expenses;}
 }

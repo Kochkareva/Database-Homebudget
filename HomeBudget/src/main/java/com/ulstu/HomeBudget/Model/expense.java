@@ -1,6 +1,7 @@
 package com.ulstu.HomeBudget.Model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -18,6 +19,11 @@ public class expense {
     @Column()
     Date date_operation;
     int summa;
+    @ManyToOne
+    @JoinColumn(name = "expense_fk")
+    private category_expense category_expense;
+    @ManyToMany(mappedBy = "family_member")
+    private List<family_member> family_members = new ArrayList<>();
 
     public expense(Date date_operation, int summa){
         this.date_operation = date_operation;
@@ -44,5 +50,27 @@ public class expense {
                 ", date_operation = '" + date_operation + '\'' +
                 ", summa = '" + summa + '\'' +
                 '}';
+    }
+
+    public void setFamily_members (List<family_member> family_members)
+    {
+        this.family_members = family_members;
+    }
+    public void addFamily_member(family_member family_member) {
+        family_members.add(family_member);
+        if (!family_member.getExpenses().contains(this)) {
+            family_member.addExpenses(this);
+        }
+    }
+    public List<family_member> getFamily_members(){return this.family_members;}
+
+    public category_expense getCategory_expense() {
+        return category_expense;
+    }
+    public void setCategory_expense(category_expense category_expense) {
+        this.category_expense = category_expense;
+        if(!category_expense.getExpenses().contains(this)){
+            category_expense.setExpenses(this);
+        }
     }
 }

@@ -1,6 +1,7 @@
 package com.ulstu.HomeBudget.Model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -18,6 +19,11 @@ public class revenue {
     @Column()
     Date date_operation;
     int summa;
+    @ManyToOne
+    @JoinColumn(name = "revenue_fk")
+    private source_revenue source_revenue;
+    @ManyToMany(mappedBy = "family_member")
+    private List<family_member> family_members = new ArrayList<>();
 
     public revenue(Date date_operation, int summa){
         this.date_operation = date_operation;
@@ -44,5 +50,30 @@ public class revenue {
                 ", date_operation = '" + date_operation + '\'' +
                 ", summa = '" + summa + '\'' +
                 '}';
+    }
+
+    public void setFamily_members (List<family_member> family_members)
+    {
+        this.family_members = family_members;
+    }
+
+    public void addFamily_member(family_member family_member) {
+        family_members.add(family_member);
+        if (!family_member.getRevenues().contains(this)) {
+            family_member.addRevenues(this);
+        }
+    }
+
+    public List<family_member> getFamily_members(){return this.family_members;}
+
+
+    public source_revenue getSource_revenue() {
+        return source_revenue;
+    }
+    public void setSource_revenue(source_revenue source_revenue) {
+        this.source_revenue = source_revenue;
+        if(!source_revenue.getRevenues().contains(this)){
+            source_revenue.setRevenues(this);
+        }
     }
 }
