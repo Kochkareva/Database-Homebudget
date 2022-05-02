@@ -24,12 +24,12 @@ public class family_member {
     @ManyToMany
     @JoinTable(name="familyMember_Revenue",
             joinColumns = @JoinColumn(name ="family_member_fk"),
-            inverseJoinColumns = @JoinColumn(name = "revenue_fk"))
+            inverseJoinColumns = @JoinColumn(name = "revenues"))
     private List<revenue> revenues = new ArrayList<>();
     @ManyToMany
     @JoinTable(name="familyMember_Expense",
             joinColumns = @JoinColumn(name ="family_member_fk"),
-            inverseJoinColumns = @JoinColumn(name = "expense_fk"))
+            inverseJoinColumns = @JoinColumn(name = "expenses"))
     private List<expense> expenses = new ArrayList<>();
 
     public family_member(String surname, String middle_name, String name,

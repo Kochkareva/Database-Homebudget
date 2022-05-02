@@ -22,7 +22,7 @@ public class revenue {
     @ManyToOne
     @JoinColumn(name = "revenue_fk")
     private source_revenue source_revenue;
-    @ManyToMany(mappedBy = "family_member")
+    @ManyToMany(mappedBy = "revenues")
     private List<family_member> family_members = new ArrayList<>();
 
     public revenue(Date date_operation, int summa){
