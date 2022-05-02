@@ -1,57 +1,43 @@
 package com.ulstu.HomeBudget.Controller;
 
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 import com.ulstu.HomeBudget.Model.expense;
-import com.ulstu.HomeBudget.Service.expense_service;
-
-import java.util.Date;
 import java.util.List;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import com.ulstu.HomeBudget.HibernateSessionFactoryUtil;
 
-@RestController
-@RequestMapping("/expense")
 public class expense_controller {
-    private final expense_service expense_service;
 
-    public expense_controller(expense_service expense_service) {
-        this.expense_service = expense_service;
+    public expense findById(int id) {
+        return HibernateSessionFactoryUtil.getSessionFactory().openSession().get(expense.class, id);
     }
 
-    @GetMapping("/{id}")
-    public expense get_expense(@PathVariable Long id) {
-        return expense_service.find_expense(id);
+    public void save(expense expense) {
+        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        Transaction tx1 = session.beginTransaction();
+        session.save(expense);
+        tx1.commit();
+        session.close();
     }
 
-    @GetMapping("/")
-    public List<expense> get_all_expenses() {
-        return expense_service.find_All_expense();
+    public void update(expense expense) {
+        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        Transaction tx1 = session.beginTransaction();
+        session.update(expense);
+        tx1.commit();
+        session.close();
     }
 
-    /**
-     *     Date date_operation;
-     *     int summa;
-     */
-    @PostMapping("/")
-    public expense create_expense(@RequestParam("date_operation") Date date_operation,
-                                                    @RequestParam("summa") int summa) {
-        return expense_service.add_expense(date_operation, summa);
+    public void delete(expense expense) {
+        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        Transaction tx1 = session.beginTransaction();
+        session.delete(expense);
+        tx1.commit();
+        session.close();
     }
 
-    @PatchMapping("/{id}")
-    public expense update_expense(@PathVariable Long id,
-                                  @RequestParam("date_operation") Date date_operation,
-                                  @RequestParam("summa") int summa) {
-        return expense_service.update_expense(id, date_operation, summa);
-    }
-
-    @DeleteMapping("/{id}")
-    public expense delete_expense(@PathVariable Long id) {
-        return expense_service.delete_expense(id);
+    public List<expense> findAll() {
+        List<expense> expenses = (List<expense>)  HibernateSessionFactoryUtil.getSessionFactory().openSession().createQuery("From expense").list();
+        return expenses;
     }
 }

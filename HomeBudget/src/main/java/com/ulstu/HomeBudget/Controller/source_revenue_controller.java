@@ -1,67 +1,42 @@
 package com.ulstu.HomeBudget.Controller;
 
-import com.ulstu.HomeBudget.Model.family_member;
-import com.ulstu.HomeBudget.Service.family_member_service;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 import com.ulstu.HomeBudget.Model.source_revenue;
-import com.ulstu.HomeBudget.Service.source_revenue_service;
-
 import java.util.List;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import com.ulstu.HomeBudget.HibernateSessionFactoryUtil;
 
-@RestController
-@RequestMapping("/source_revenue")
 public class source_revenue_controller {
-    private final source_revenue_service source_revenue_service;
-
-    public source_revenue_controller(source_revenue_service source_revenue_service) {
-        this.source_revenue_service = source_revenue_service;
+    public source_revenue findById(int id) {
+        return HibernateSessionFactoryUtil.getSessionFactory().openSession().get(source_revenue.class, id);
     }
 
-    @GetMapping("/{id}")
-    public source_revenue get_source_revenue(@PathVariable Long id) {
-        return source_revenue_service.find_source_revenue(id);
+    public void save(source_revenue source_revenue) {
+        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        Transaction tx1 = session.beginTransaction();
+        session.save(source_revenue);
+        tx1.commit();
+        session.close();
     }
 
-    @GetMapping("/")
-    public List<source_revenue> get_all_source_revenues() {
-        return source_revenue_service.find_All_source_revenue();
+    public void update(source_revenue source_revenue) {
+        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        Transaction tx1 = session.beginTransaction();
+        session.update(source_revenue);
+        tx1.commit();
+        session.close();
     }
 
-    /**
-     * String name_source;
-     * String type_source;
-     * String regularity;
-     * String nature_receipt;
-     * String real_form;
-     */
-    @PostMapping("/")
-    public source_revenue create_source_revenue(@RequestParam("name_source") String name_source,
-                                                @RequestParam("type_source") String type_source,
-                                                @RequestParam("regularity") String regularity,
-                                                @RequestParam("nature_receipt") String nature_receipt,
-                                                @RequestParam("real_form") String real_form) {
-        return source_revenue_service.add_source_revenue(name_source, type_source, regularity, nature_receipt, real_form);
+    public void delete(source_revenue source_revenue) {
+        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        Transaction tx1 = session.beginTransaction();
+        session.delete(source_revenue);
+        tx1.commit();
+        session.close();
     }
 
-    @PatchMapping("/{id}")
-    public source_revenue update_source_revenue(@PathVariable Long id,
-                                                @RequestParam("name_source") String name_source,
-                                                @RequestParam("type_source") String type_source,
-                                                @RequestParam("regularity") String regularity,
-                                                @RequestParam("nature_receipt") String nature_receipt,
-                                                @RequestParam("real_form") String real_form) {
-        return source_revenue_service.update_source_revenue(id, name_source, type_source, regularity, nature_receipt, real_form);
-    }
-
-    @DeleteMapping("/{id}")
-    public source_revenue delete_source_revenue(@PathVariable Long id) {
-        return source_revenue_service.delete_source_revenue(id);
+    public List<source_revenue> findAll() {
+        List<source_revenue> source_revenues = (List<source_revenue>)  HibernateSessionFactoryUtil.getSessionFactory().openSession().createQuery("From source_revenue").list();
+        return source_revenues;
     }
 }

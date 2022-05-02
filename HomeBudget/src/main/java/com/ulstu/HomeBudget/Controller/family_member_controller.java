@@ -1,65 +1,42 @@
 package com.ulstu.HomeBudget.Controller;
 
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 import com.ulstu.HomeBudget.Model.family_member;
-import com.ulstu.HomeBudget.Service.family_member_service;
-
 import java.util.List;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import com.ulstu.HomeBudget.HibernateSessionFactoryUtil;
 
-@RestController
-@RequestMapping("/family_member")
 public class family_member_controller {
-    private final family_member_service family_member_service;
-
-    public family_member_controller(family_member_service family_member_service) {
-        this.family_member_service = family_member_service;
+    public family_member findById(int id) {
+        return HibernateSessionFactoryUtil.getSessionFactory().openSession().get(family_member.class, id);
     }
 
-    @GetMapping("/{id}")
-    public family_member get_family_member(@PathVariable Long id) {
-        return family_member_service.find_family_member(id);
+    public void save(family_member family_member) {
+        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        Transaction tx1 = session.beginTransaction();
+        session.save(family_member);
+        tx1.commit();
+        session.close();
     }
 
-    @GetMapping("/")
-    public List<family_member> get_all_family_members() {
-        return family_member_service.find_All_family_member();
+    public void update(family_member family_member) {
+        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        Transaction tx1 = session.beginTransaction();
+        session.update(family_member);
+        tx1.commit();
+        session.close();
     }
 
-    /**
-     *     String surname;
-     *     String middle_name;
-     *     String name;
-     *     int age;
-     *     String email;
-     */
-    @PostMapping("/")
-    public family_member create_family_member(@RequestParam("surname") String surname,
-                                              @RequestParam("middle_name") String middle_name,
-                                              @RequestParam("name") String name,
-                                              @RequestParam("age") int age,
-                                              @RequestParam("email") String email) {
-        return family_member_service.add_family_member(surname, middle_name, name, age, email);
+    public void delete(family_member family_member) {
+        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        Transaction tx1 = session.beginTransaction();
+        session.delete(family_member);
+        tx1.commit();
+        session.close();
     }
 
-    @PatchMapping("/{id}")
-    public family_member update_family_member(@PathVariable Long id,
-                                              @RequestParam("surname") String surname,
-                                              @RequestParam("middle_name") String middle_name,
-                                              @RequestParam("name") String name,
-                                              @RequestParam("age") int age,
-                                              @RequestParam("email") String email) {
-        return family_member_service.update_family_member(id, surname, middle_name, name, age, email);
-    }
-
-    @DeleteMapping("/{id}")
-    public family_member delete_family_member(@PathVariable Long id) {
-        return family_member_service.delete_family_member(id);
+    public List<family_member> findAll() {
+        List<family_member> family_members = (List<family_member>)  HibernateSessionFactoryUtil.getSessionFactory().openSession().createQuery("From family_member").list();
+        return family_members;
     }
 }

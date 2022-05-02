@@ -1,63 +1,44 @@
 package com.ulstu.HomeBudget.Controller;
 
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 import com.ulstu.HomeBudget.Model.category_expense;
-import com.ulstu.HomeBudget.Service.category_expense_service;
-
 import java.util.List;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import com.ulstu.HomeBudget.HibernateSessionFactoryUtil;
 
-@RestController
-@RequestMapping("/category_expense")
 public class category_expense_controller {
-    private final category_expense_service category_expense_service;
 
-    public category_expense_controller(category_expense_service category_expense_service) {
-        this.category_expense_service = category_expense_service;
+    public category_expense findById(int id) {
+        return HibernateSessionFactoryUtil.getSessionFactory().openSession().get(category_expense.class, id);
     }
 
-    @GetMapping("/{id}")
-    public category_expense get_category_expense(@PathVariable Long id) {
-        return category_expense_service.find_category_expense(id);
+    public void save(category_expense category_expense) {
+        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        Transaction tx1 = session.beginTransaction();
+        session.save(category_expense);
+        tx1.commit();
+        session.close();
     }
 
-    @GetMapping("/")
-    public List<category_expense> get_all_category_expenses() {
-        return category_expense_service.find_All_category_expense();
+    public void update(category_expense category_expense) {
+        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        Transaction tx1 = session.beginTransaction();
+        session.update(category_expense);
+        tx1.commit();
+        session.close();
     }
 
-    /**
-     * String category;
-     * int limits;
-     * int passibility_planning;
-     * int category_necessity;
-     */
-    @PostMapping("/")
-    public category_expense create_category_expense(@RequestParam("category") String category,
-                                                    @RequestParam("limits") int limits,
-                                                    @RequestParam("passibility_planning") int passibility_planning,
-                                                    @RequestParam("category_necessity") int category_necessity) {
-        return category_expense_service.add_category_expense(category, limits, passibility_planning, category_necessity);
+    public void delete(category_expense category_expense) {
+        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        Transaction tx1 = session.beginTransaction();
+        session.delete(category_expense);
+        tx1.commit();
+        session.close();
     }
 
-    @PatchMapping("/{id}")
-    public category_expense update_category_expense(@PathVariable Long id,
-                                                    @RequestParam("category") String category,
-                                                    @RequestParam("limits") int limits,
-                                                    @RequestParam("passibility_planning") int passibility_planning,
-                                                    @RequestParam("category_necessity") int category_necessity) {
-        return category_expense_service.update_category_expense(id, category, limits, passibility_planning, category_necessity);
-    }
-
-    @DeleteMapping("/{id}")
-    public category_expense delete_category_expense(@PathVariable Long id) {
-        return category_expense_service.delete_category_expense(id);
+    public List<category_expense> findAll() {
+        List<category_expense> category_expenses = (List<category_expense>)  HibernateSessionFactoryUtil.getSessionFactory().openSession().createQuery("From category_expense").list();
+        return category_expenses;
     }
 }
 
