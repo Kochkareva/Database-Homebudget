@@ -3,11 +3,23 @@ package com.ulstu.HomeBudget.Controller;
 import com.ulstu.HomeBudget.Model.family_member;
 import java.util.List;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import com.ulstu.HomeBudget.HibernateSessionFactoryUtil;
 
+import javax.persistence.EntityManagerFactory;
+
 public class family_member_controller {
+
+/*
     public family_member findById(int id) {
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        family_member family_members = (family_member) session.get(family_member.class, id);
+        session.getTransaction().commit();
+        return family_members;
+
+
         return HibernateSessionFactoryUtil.getSessionFactory().openSession().get(family_member.class, id);
     }
 
@@ -39,4 +51,6 @@ public class family_member_controller {
         List<family_member> family_members = (List<family_member>)  HibernateSessionFactoryUtil.getSessionFactory().openSession().createQuery("From family_member").list();
         return family_members;
     }
+
+ */
 }

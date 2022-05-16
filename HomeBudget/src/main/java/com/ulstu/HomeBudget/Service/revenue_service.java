@@ -6,7 +6,7 @@ import com.ulstu.HomeBudget.Model.revenue;
 import java.util.List;
 
 public class revenue_service {
-    private revenue_controller revenue_controller = new revenue_controller();
+    /*private revenue_controller revenue_controller = new revenue_controller();
 
     public revenue_service() {
     }
@@ -30,4 +30,6 @@ public class revenue_service {
     public List<revenue> find_All_revenues() {
         return revenue_controller.findAll();
     }
+
+     */
 }

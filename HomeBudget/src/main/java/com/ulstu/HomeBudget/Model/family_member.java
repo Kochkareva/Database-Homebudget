@@ -21,17 +21,18 @@ public class family_member {
     String name;
     int age;
     String email;
-    @ManyToMany
-    @JoinTable(name="familyMember_Revenue",
-            joinColumns = @JoinColumn(name ="family_member_fk"),
-            inverseJoinColumns = @JoinColumn(name = "revenues"))
-    private List<revenue> revenues = new ArrayList<>();
-    @ManyToMany
-    @JoinTable(name="familyMember_Expense",
-            joinColumns = @JoinColumn(name ="family_member_fk"),
-            inverseJoinColumns = @JoinColumn(name = "expenses"))
-    private List<expense> expenses = new ArrayList<>();
+    @ManyToMany(fetch = FetchType.LAZY,  cascade = CascadeType.ALL)
+    @JoinTable(name="familyMember_revenue",
+            joinColumns = @JoinColumn(name ="familymember_id"),
+            inverseJoinColumns = @JoinColumn(name = "revenue_id"))
+    List<revenue> revenues = new ArrayList<>();
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinTable(name="familyMember_expense",
+            joinColumns = @JoinColumn(name ="familymember_id"),
+            inverseJoinColumns = @JoinColumn(name = "expenses_id"))
+    List<expense> expenses = new ArrayList<>();
 
+    public family_member(){}
     public family_member(String surname, String middle_name, String name,
                          int age, String email) {
         this.surname = surname;

@@ -6,7 +6,7 @@ import com.ulstu.HomeBudget.Model.expense;
 import java.util.List;
 
 public class expense_service {
-    private expense_controller expense_controller = new expense_controller();
+   /* private expense_controller expense_controller = new expense_controller();
 
     public expense_service() {
     }
@@ -30,4 +30,6 @@ public class expense_service {
     public List<expense> find_All_expenses() {
         return expense_controller.findAll();
     }
+
+    */
 }

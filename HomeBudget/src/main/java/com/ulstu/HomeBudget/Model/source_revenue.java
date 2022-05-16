@@ -20,9 +20,13 @@ public class source_revenue {
     String regularity;
     String nature_receipt;
     String real_form;
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name="source_revenue_fk")
-    private List<revenue> revenues;
+    List<revenue> revenues;
+
+    public source_revenue(){
+
+    }
 
     public source_revenue(String name_source, String type_source, String regularity, String nature_receipt, String real_form){
         this.name_source = name_source;

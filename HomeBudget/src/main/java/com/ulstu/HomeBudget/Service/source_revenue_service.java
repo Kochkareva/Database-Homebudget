@@ -6,7 +6,7 @@ import com.ulstu.HomeBudget.Model.source_revenue;
 import java.util.List;
 
 public class source_revenue_service {
-    private source_revenue_controller source_revenue_controller = new source_revenue_controller();
+   /* private source_revenue_controller source_revenue_controller = new source_revenue_controller();
 
     public source_revenue_service() {
     }
@@ -30,4 +30,6 @@ public class source_revenue_service {
     public List<source_revenue> find_All_source_revenues() {
         return source_revenue_controller.findAll();
     }
+
+    */
 }

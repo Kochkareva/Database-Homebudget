@@ -19,11 +19,16 @@ public class revenue {
     @Column()
     Date date_operation;
     int summa;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER,  cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "revenue_fk")
-    private source_revenue source_revenue;
-    @ManyToMany(mappedBy = "revenues")
-    private List<family_member> family_members = new ArrayList<>();
+    source_revenue source_revenue;
+
+    @ManyToMany(mappedBy = "revenues", fetch = FetchType.EAGER,  cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    List<family_member> family_members = new ArrayList<>();
+
+    public revenue(){
+
+    }
 
     public revenue(Date date_operation, int summa){
         this.date_operation = date_operation;

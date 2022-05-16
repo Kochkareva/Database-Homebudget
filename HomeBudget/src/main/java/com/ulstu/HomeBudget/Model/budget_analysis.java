@@ -25,6 +25,10 @@ public class budget_analysis {
     int discrepancy_revenue;
     int reserve;
 
+    public budget_analysis(){
+
+    }
+
     public budget_analysis(int now_month, int revenue_month, int expenses_month, int surplus,
                            int plan_expenses, int plan_revenue, int discrepancy_expenses, int discrepancy_revenue, int reserve){
         this.now_month = now_month;

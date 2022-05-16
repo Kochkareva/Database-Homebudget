@@ -2,11 +2,12 @@ package com.ulstu.HomeBudget.Service;
 
 import com.ulstu.HomeBudget.Controller.family_member_controller;
 import com.ulstu.HomeBudget.Model.family_member;
+import org.hibernate.Session;
 
 import java.util.List;
 
 public class family_member_service {
-    private family_member_controller family_member_controller = new family_member_controller();
+   /* private family_member_controller family_member_controller = new family_member_controller();
 
     public family_member_service() {
     }
@@ -30,4 +31,6 @@ public class family_member_service {
     public List<family_member> find_All_family_members() {
         return family_member_controller.findAll();
     }
+
+    */
 }

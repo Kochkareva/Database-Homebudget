@@ -19,9 +19,13 @@ public class category_expense {
     int limits;
     int passibility_planning;
     int category_necessity;
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER,  cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name="category_expense_fk")
     private List<expense> expenses;
+
+    public category_expense(){
+
+    }
 
     public category_expense(String category, int limits, int passibility_planning, int category_necessity){
         this.category=category;

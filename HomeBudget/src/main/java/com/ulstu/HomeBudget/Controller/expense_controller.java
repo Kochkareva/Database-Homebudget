@@ -8,7 +8,7 @@ import com.ulstu.HomeBudget.HibernateSessionFactoryUtil;
 
 public class expense_controller {
 
-    public expense findById(int id) {
+ /*   public expense findById(int id) {
         return HibernateSessionFactoryUtil.getSessionFactory().openSession().get(expense.class, id);
     }
 
@@ -39,5 +39,5 @@ public class expense_controller {
     public List<expense> findAll() {
         List<expense> expenses = (List<expense>)  HibernateSessionFactoryUtil.getSessionFactory().openSession().createQuery("From expense").list();
         return expenses;
-    }
+    }*/
 }

@@ -7,7 +7,7 @@ import org.hibernate.Transaction;
 import com.ulstu.HomeBudget.HibernateSessionFactoryUtil;
 
 public class source_revenue_controller {
-    public source_revenue findById(int id) {
+  /*  public source_revenue findById(int id) {
         return HibernateSessionFactoryUtil.getSessionFactory().openSession().get(source_revenue.class, id);
     }
 
@@ -38,5 +38,5 @@ public class source_revenue_controller {
     public List<source_revenue> findAll() {
         List<source_revenue> source_revenues = (List<source_revenue>)  HibernateSessionFactoryUtil.getSessionFactory().openSession().createQuery("From source_revenue").list();
         return source_revenues;
-    }
+    }*/
 }

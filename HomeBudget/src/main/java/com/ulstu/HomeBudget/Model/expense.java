@@ -19,11 +19,15 @@ public class expense {
     @Column()
     Date date_operation;
     int summa;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER,  cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "expense_fk")
-    private category_expense category_expense;
-    @ManyToMany(mappedBy = "expenses")
+    category_expense category_expense;
+    @ManyToMany(mappedBy = "expenses", fetch = FetchType.EAGER,  cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<family_member> family_members = new ArrayList<>();
+
+    public expense(){
+
+    }
 
     public expense(Date date_operation, int summa){
         this.date_operation = date_operation;
