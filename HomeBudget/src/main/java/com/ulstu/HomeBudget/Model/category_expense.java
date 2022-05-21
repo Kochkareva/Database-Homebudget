@@ -65,12 +65,12 @@ public class category_expense {
                 '}';
     }
 
-   /* public void setExpenses (expense expense)
+    public void setExpenses (expense expense)
     {
         expenses.add(expense);
         if(expense.getCategory_expense()!=this){
             expense.setCategory_expense(this);
         }
     }
-    public List<expense> getExpenses(){return this.expenses;}*/
+    public List<expense> getExpenses(){return this.expenses;}
 }

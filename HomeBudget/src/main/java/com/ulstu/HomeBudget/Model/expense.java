@@ -75,8 +75,8 @@ public class expense {
     }
     public void setCategory_expense(category_expense category_expense) {
         this.category_expense = category_expense;
-       /* if(!category_expense.getExpenses().contains(this)){
+        if(!category_expense.getExpenses().contains(this)){
             category_expense.setExpenses(this);
-        }*/
+        }
     }
 }
