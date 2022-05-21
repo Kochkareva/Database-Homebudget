@@ -4,13 +4,14 @@
                 "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
 <session-factory>
-    <property name="connection.url">jdbc:postgresql://192.168.68.111:5432/Homebudget</property>
+    <property name="connection.url">jdbc:postgresql://192.168.68.114:5432/Homebudget</property>
     <property name="connection.driver_class">org.postgresql.Driver</property>
     <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQL10Dialect</property>
     <property name="connection.username">postgres</property>
     <property name="connection.password">1091</property>
     <property name="show_sql">false</property>
     <property name="current_session_context_class">thread</property>
+    <property name="log4j.logger.org.hibernate">info</property>
 
     <!-- DB schema will be updated if needed -->
     <!-- <property name="hibernate.hbm2ddl.auto">update</property> -->

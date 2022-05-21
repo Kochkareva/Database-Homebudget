@@ -1,42 +1,60 @@
 package com.ulstu.HomeBudget.Controller;
 
 import com.ulstu.HomeBudget.Model.source_revenue;
-import java.util.List;
+import com.ulstu.HomeBudget.Service.source_revenue_service;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
-import com.ulstu.HomeBudget.HibernateSessionFactoryUtil;
+import org.hibernate.SessionFactory;
+
+import java.util.Scanner;
 
 public class source_revenue_controller {
-  /*  public source_revenue findById(int id) {
-        return HibernateSessionFactoryUtil.getSessionFactory().openSession().get(source_revenue.class, id);
-    }
+    private source_revenue_service sr_service;
 
-    public void save(source_revenue source_revenue) {
-        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
-        Transaction tx1 = session.beginTransaction();
-        session.save(source_revenue);
-        tx1.commit();
-        session.close();
+    public source_revenue_controller(SessionFactory sessionFactory) {
+        Session session = null;
+        session = sessionFactory.getCurrentSession();
+        session.beginTransaction();
+        Scanner scanner = new Scanner(System.in);
+        int menu = scanner.nextInt();
+        while (menu > 0) {
+            System.out.println("--------------------------------------------------------------------------------------------------");
+            System.out.println("----------------------------------- Select action ------------------------------------------------");
+            System.out.println("----------------------------- create new source_revenue: 1 ---------------------------------------");
+            System.out.println("----------------------------- update source_revenue: 2 -------------------------------------------");
+            System.out.println("----------------------------- delete source_revenue: 3 -------------------------------------------");
+            System.out.println("----------------------------- Exit: 0 ------------------------------------------------------------");
+            System.out.println("--------------------------------------------------------------------------------------------------");
+            sr_service = new source_revenue_service();
+            if (menu == 1) {
+                System.out.println("Enter name: ");
+                Scanner sc = new Scanner(System.in);
+                String name = sc.nextLine();
+                System.out.println("Enter type source: ");
+                String source = sc.nextLine();
+                System.out.println("Enter regularity: ");
+                String regularity = sc.nextLine();
+                System.out.println("Enter nature receipt: ");
+                String nature = sc.nextLine();
+                System.out.println("Enter real form");
+                String form = sc.nextLine();
+                source_revenue sr = new source_revenue(name, source, regularity, nature, form);
+                sr_service.create_source_revenue(session, sr);
+            }
+            if (menu == 2) {
+                sr_service.get_source_revenues(session);
+                System.out.println("Enter id source: ");
+                Scanner sc = new Scanner(System.in);
+                int id_source = sc.nextInt();
+                sr_service.update_source_revenue(session, id_source);
+            }
+            if (menu == 3) {
+                sr_service.get_source_revenues(session);
+                System.out.println("Enter id source: ");
+                Scanner sc = new Scanner(System.in);
+                int id_source = sc.nextInt();
+                sr_service.delete_source_revenue(session, id_source);
+            }
+            session.getTransaction().commit();
+        }
     }
-
-    public void update(source_revenue source_revenue) {
-        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
-        Transaction tx1 = session.beginTransaction();
-        session.update(source_revenue);
-        tx1.commit();
-        session.close();
-    }
-
-    public void delete(source_revenue source_revenue) {
-        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
-        Transaction tx1 = session.beginTransaction();
-        session.delete(source_revenue);
-        tx1.commit();
-        session.close();
-    }
-
-    public List<source_revenue> findAll() {
-        List<source_revenue> source_revenues = (List<source_revenue>)  HibernateSessionFactoryUtil.getSessionFactory().openSession().createQuery("From source_revenue").list();
-        return source_revenues;
-    }*/
 }

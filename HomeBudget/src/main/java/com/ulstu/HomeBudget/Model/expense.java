@@ -13,16 +13,18 @@ import javax.persistence.Entity;
 
 @Entity
 public class expense {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "expense_id")
+    private int id;
     @Column()
     Date date_operation;
     int summa;
-    @ManyToOne(fetch = FetchType.EAGER,  cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinColumn(name = "expense_fk")
+    @ManyToOne(fetch = FetchType.LAZY,  cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_category")
     category_expense category_expense;
-    @ManyToMany(mappedBy = "expenses", fetch = FetchType.EAGER,  cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToMany(mappedBy = "expenses",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<family_member> family_members = new ArrayList<>();
 
     public expense(){
@@ -34,7 +36,7 @@ public class expense {
         this.summa = summa;
     }
 
-    public Long getId() { return id;}
+    public int getId() { return id;}
 
     public Date getDate_operation(){return date_operation;}
     public void setDate_operation(Date date_operation){this.date_operation=date_operation;}
@@ -73,8 +75,8 @@ public class expense {
     }
     public void setCategory_expense(category_expense category_expense) {
         this.category_expense = category_expense;
-        if(!category_expense.getExpenses().contains(this)){
+       /* if(!category_expense.getExpenses().contains(this)){
             category_expense.setExpenses(this);
-        }
+        }*/
     }
 }

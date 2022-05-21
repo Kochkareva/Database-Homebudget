@@ -1,56 +1,61 @@
 package com.ulstu.HomeBudget.Controller;
 
 import com.ulstu.HomeBudget.Model.family_member;
-import java.util.List;
+import com.ulstu.HomeBudget.Service.family_member_service;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import com.ulstu.HomeBudget.HibernateSessionFactoryUtil;
 
-import javax.persistence.EntityManagerFactory;
+import java.util.Scanner;
 
 public class family_member_controller {
 
-/*
-    public family_member findById(int id) {
-        Session session = sessionFactory.openSession();
+    private family_member_service fm_service;
+
+    public family_member_controller(SessionFactory sessionFactory) {
+        Session session = null;
+        session = sessionFactory.getCurrentSession();
         session.beginTransaction();
-        family_member family_members = (family_member) session.get(family_member.class, id);
-        session.getTransaction().commit();
-        return family_members;
-
-
-        return HibernateSessionFactoryUtil.getSessionFactory().openSession().get(family_member.class, id);
+        Scanner scanner = new Scanner(System.in);
+        int menu = scanner.nextInt();
+        while (menu > 0) {
+            System.out.println("--------------------------------------------------------------------------------------------------");
+            System.out.println("----------------------------------- Select action ------------------------------------------------");
+            System.out.println("----------------------------- create new family_member: 1 ----------------------------------------");
+            System.out.println("----------------------------- update family_member: 2 --------------------------------------------");
+            System.out.println("----------------------------- delete family_member: 3 --------------------------------------------");
+            System.out.println("----------------------------- Exit: 0 ------------------------------------------------------------");
+            System.out.println("--------------------------------------------------------------------------------------------------");
+            fm_service = new family_member_service();
+            if (menu == 1) {
+                System.out.println("Enter surname: ");
+                Scanner sc = new Scanner(System.in);
+                String surname = sc.nextLine();
+                System.out.println("Enter middle_name: ");
+                String middle_name = sc.nextLine();
+                System.out.println("Enter name: ");
+                String name = sc.nextLine();
+                System.out.println("Enter age: ");
+                int age = sc.nextInt();
+                System.out.println("Enter email: ");
+                String email = sc.nextLine();
+                family_member fm = new family_member(surname, middle_name, name, age, email);
+                fm_service.create_family_member(session, fm);
+            }
+            if (menu == 2) {
+                fm_service.get_family_members(session);
+                System.out.println("Enter id family member: ");
+                Scanner sc = new Scanner(System.in);
+                int id_fm = sc.nextInt();
+                fm_service.update_family_member(session, id_fm);
+            }
+            if (menu == 3) {
+                fm_service.get_family_members(session);
+                System.out.println("Enter id family member: ");
+                Scanner sc = new Scanner(System.in);
+                int id_fm = sc.nextInt();
+                fm_service.delete_family_member(session, id_fm);
+            }
+            session.getTransaction().commit();
+        }
     }
-
-    public void save(family_member family_member) {
-        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
-        Transaction tx1 = session.beginTransaction();
-        session.save(family_member);
-        tx1.commit();
-        session.close();
-    }
-
-    public void update(family_member family_member) {
-        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
-        Transaction tx1 = session.beginTransaction();
-        session.update(family_member);
-        tx1.commit();
-        session.close();
-    }
-
-    public void delete(family_member family_member) {
-        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
-        Transaction tx1 = session.beginTransaction();
-        session.delete(family_member);
-        tx1.commit();
-        session.close();
-    }
-
-    public List<family_member> findAll() {
-        List<family_member> family_members = (List<family_member>)  HibernateSessionFactoryUtil.getSessionFactory().openSession().createQuery("From family_member").list();
-        return family_members;
-    }
-
- */
 }

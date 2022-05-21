@@ -1,44 +1,63 @@
 package com.ulstu.HomeBudget.Controller;
 
 import com.ulstu.HomeBudget.Model.category_expense;
-import java.util.List;
+import com.ulstu.HomeBudget.Service.category_expense_service;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
-import com.ulstu.HomeBudget.HibernateSessionFactoryUtil;
+import org.hibernate.SessionFactory;
+import java.util.Scanner;
 
 public class category_expense_controller {
 
-  /*  public category_expense findById(int id) {
-        return HibernateSessionFactoryUtil.getSessionFactory().openSession().get(category_expense.class, id);
-    }
+    private category_expense_service ce_service;
 
-    public void save(category_expense category_expense) {
-        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
-        Transaction tx1 = session.beginTransaction();
-        session.save(category_expense);
-        tx1.commit();
-        session.close();
+    public category_expense_controller(SessionFactory sessionFactory) {
+        Session session = null;
+        session = sessionFactory.getCurrentSession();
+        session.beginTransaction();
+        Scanner scanner = new Scanner(System.in);
+        int category_menu = scanner.nextInt();
+        while (category_menu > 0) {
+            System.out.println("--------------------------------------------------------------------------------------------------");
+            System.out.println("----------------------------------- Select action ------------------------------------------------");
+            System.out.println("----------------------------- create new category_expense: 1 -------------------------------------");
+            System.out.println("----------------------------- update category_expense: 2 -----------------------------------------");
+            System.out.println("----------------------------- delete category_expense: 3 -----------------------------------------");
+            System.out.println("----------------------------- sort category_expenses: 4 ------------------------------------------");
+            System.out.println("----------------------------- Exit: 0 ------------------------------------------------------------");
+            System.out.println("--------------------------------------------------------------------------------------------------");
+            ce_service = new category_expense_service();
+            if (category_menu == 1) {
+                System.out.println("Enter name: ");
+                Scanner sc = new Scanner(System.in);
+                String name = sc.nextLine();
+                System.out.println("Enter limits: ");
+                int limit = sc.nextInt();
+                System.out.println("Enter passibility planning: ");
+                int planning = sc.nextInt();
+                System.out.println("Enter category necessity: ");
+                int necessity = sc.nextInt();
+                category_expense ce = new category_expense(name, limit, planning, necessity);
+                ce_service.create_category_expense(session, ce);
+            }
+            if (category_menu == 2){
+                ce_service.get_category_expenses(session);
+                System.out.println("Enter id category: ");
+                Scanner sc = new Scanner(System.in);
+                int id_category = sc.nextInt();
+                ce_service.update_category_expense(session, id_category);
+            }
+            if(category_menu == 3){
+                ce_service.get_category_expenses(session);
+                System.out.println("Enter id category: ");
+                Scanner sc = new Scanner(System.in);
+                int id_category = sc.nextInt();
+                ce_service.delete_category_expense(session, id_category);
+            }
+            if(category_menu == 4){
+                ce_service.get_category_expense_sorted(session);
+            }
+            session.getTransaction().commit();
+        }
     }
-
-    public void update(category_expense category_expense) {
-        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
-        Transaction tx1 = session.beginTransaction();
-        session.update(category_expense);
-        tx1.commit();
-        session.close();
-    }
-
-    public void delete(category_expense category_expense) {
-        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
-        Transaction tx1 = session.beginTransaction();
-        session.delete(category_expense);
-        tx1.commit();
-        session.close();
-    }
-
-    public List<category_expense> findAll() {
-        List<category_expense> category_expenses = (List<category_expense>)  HibernateSessionFactoryUtil.getSessionFactory().openSession().createQuery("From category_expense").list();
-        return category_expenses;
-    }*/
 }
 

@@ -12,15 +12,16 @@ import javax.persistence.Entity;
 @Entity
 public class category_expense {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "category_id")
+    private int id;
     @Column()
     String category;
     int limits;
     int passibility_planning;
     int category_necessity;
-    @OneToMany(fetch = FetchType.EAGER,  cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinColumn(name="category_expense_fk")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name="expenses_id_category_fkey")
     private List<expense> expenses;
 
     public category_expense(){
@@ -34,7 +35,7 @@ public class category_expense {
         this.category_necessity = category_necessity;
     }
 
-    public Long getId() { return id;}
+    public int getId() { return id;}
 
     public String getCategory(){return category;}
     public void setCategory(String category){this.category=category;}
@@ -64,12 +65,12 @@ public class category_expense {
                 '}';
     }
 
-    public void setExpenses (expense expense)
+   /* public void setExpenses (expense expense)
     {
         expenses.add(expense);
         if(expense.getCategory_expense()!=this){
             expense.setCategory_expense(this);
         }
     }
-    public List<expense> getExpenses(){return this.expenses;}
+    public List<expense> getExpenses(){return this.expenses;}*/
 }

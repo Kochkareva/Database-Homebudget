@@ -14,34 +14,46 @@ import javax.persistence.Entity;
 @Entity
 public class revenue {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "revenue_id")
+    private int id;
     @Column()
     Date date_operation;
     int summa;
-    @ManyToOne(fetch = FetchType.EAGER,  cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinColumn(name = "revenue_fk")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_source")
     source_revenue source_revenue;
-
-    @ManyToMany(mappedBy = "revenues", fetch = FetchType.EAGER,  cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToMany(mappedBy = "revenues", cascade = CascadeType.ALL)
     List<family_member> family_members = new ArrayList<>();
 
-    public revenue(){
+    public revenue() {
 
     }
 
-    public revenue(Date date_operation, int summa){
+    public revenue(Date date_operation, int summa) {
         this.date_operation = date_operation;
         this.summa = summa;
     }
 
-    public Long getId() { return id;}
+    public int getId() {
+        return id;
+    }
 
-    public Date getDate_operation(){return date_operation;}
-    public void setDate_operation(Date date_operation){this.date_operation=date_operation;}
+    public Date getDate_operation() {
+        return date_operation;
+    }
 
-    public int getSumma(){return summa;}
-    public void setSumma(int summa){this.summa=summa;}
+    public void setDate_operation(Date date_operation) {
+        this.date_operation = date_operation;
+    }
+
+    public int getSumma() {
+        return summa;
+    }
+
+    public void setSumma(int summa) {
+        this.summa = summa;
+    }
 
     @Override
     public int hashCode() {
@@ -57,8 +69,7 @@ public class revenue {
                 '}';
     }
 
-    public void setFamily_members (List<family_member> family_members)
-    {
+    public void setFamily_members(List<family_member> family_members) {
         this.family_members = family_members;
     }
 
@@ -69,15 +80,18 @@ public class revenue {
         }
     }
 
-    public List<family_member> getFamily_members(){return this.family_members;}
+    public List<family_member> getFamily_members() {
+        return this.family_members;
+    }
 
 
     public source_revenue getSource_revenue() {
         return source_revenue;
     }
+
     public void setSource_revenue(source_revenue source_revenue) {
         this.source_revenue = source_revenue;
-        if(!source_revenue.getRevenues().contains(this)){
+        if (!source_revenue.getRevenues().contains(this)) {
             source_revenue.setRevenues(this);
         }
     }

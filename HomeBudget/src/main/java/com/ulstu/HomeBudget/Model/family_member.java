@@ -1,5 +1,10 @@
 package com.ulstu.HomeBudget.Model;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,16 +16,26 @@ import javax.persistence.Id;
 import javax.persistence.Entity;
 
 @Entity
+@Table(name = "family_member", schema = "public", catalog = "test")
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 public class family_member {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-    @Column()
-    String surname;
-    String middle_name;
-    String name;
-    int age;
-    String email;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "family_id")
+    private int family_id;
+    @Column(name = "surname")
+    String _surname;
+    @Column(name = "middle_name")
+    String _middle_name;
+    @Column(name = "name_member")
+    String name_member;
+    @Column(name = "age")
+    int _age;
+    @Column(name = "email")
+    String _email;
     @ManyToMany(fetch = FetchType.LAZY,  cascade = CascadeType.ALL)
     @JoinTable(name="familyMember_revenue",
             joinColumns = @JoinColumn(name ="familymember_id"),
@@ -32,47 +47,47 @@ public class family_member {
             inverseJoinColumns = @JoinColumn(name = "expenses_id"))
     List<expense> expenses = new ArrayList<>();
 
-    public family_member(){}
-    public family_member(String surname, String middle_name, String name,
+
+    public family_member(String surname, String middle_name, String name_member,
                          int age, String email) {
-        this.surname = surname;
-        this.middle_name = middle_name;
-        this.name = name;
-        this.age = age;
-        this.email = email;
+        this._surname = surname;
+        this._middle_name = middle_name;
+        this.name_member = name_member;
+        this._age = age;
+        this._email = email;
     }
 
-    public Long getId() { return id;}
+    public int getId() { return family_id;}
 
-    public String getSurname(){ return surname;}
-    public void setSurname(String surname){this.surname = surname;}
+    public String getSurname(){ return _surname;}
+    public void setSurname(String surname){this._surname = surname;}
 
-    public String getMiddle_name(){return middle_name;}
-    public void setMiddle_name(String middle_name){this.middle_name = middle_name;}
+    public String getMiddle_name(){return _middle_name;}
+    public void setMiddle_name(String middle_name){this._middle_name = middle_name;}
 
-    public String getName(){return name;}
-    public void setName(String name){ this.name = name;}
+    public String getName(){return name_member;}
+    public void setName(String name){ this.name_member = name;}
 
-    public int getAge(){return age;}
-    public void setAge(int age){this.age =age;}
+    public int getAge(){return _age;}
+    public void setAge(int age){this._age =age;}
 
-    public String getEmail(){return email;}
-    public void setEmail(String email){this.email = email;}
+    public String getEmail(){return _email;}
+    public void setEmail(String email){this._email = email;}
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(family_id);
     }
 
     @Override
     public String toString() {
         return "family_member{" +
-                "id = " + id +
-                ", surname = '" + surname + '\'' +
-                ", middle_name = '" + middle_name + '\'' +
-                ", name = '" + name + '\'' +
-                ", age = '" + age + '\'' +
-                ", email = '" + email + '\'' +
+                "id = " + family_id +
+                ", surname = '" + _surname + '\'' +
+                ", middle_name = '" + _middle_name + '\'' +
+                ", name = '" + name_member + '\'' +
+                ", age = '" + _age + '\'' +
+                ", email = '" + _email + '\'' +
                 '}';
     }
 
